@@ -339,7 +339,6 @@ def animate(angle,power,gravity,win):
                 yright = clicky - centerpointrighty
                 xleft = clickx - centerpointleftx
                 yleft = clicky - centerpointlefty
-                r = 0
                 if -10 < xright < 10 and -10 < yright < 10:
                     circleright.undraw()
                     score += round(((int(gravity)+int(power))/10),2)
