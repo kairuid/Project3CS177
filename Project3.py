@@ -224,7 +224,7 @@ def main():
                     pull.setFill("yellow")
                     newgame.setFill("grey")
                     sleep(2)
-                    newerscore = animate(angle.getText(),power.getText(),gravity.getText(),gamewindow)
+                    newerscore = doubleanimate(angle.getText(),power.getText(),gravity.getText(),gamewindow)
                     sleep(0.1)
                     newgame.setFill("green")
                     pull.setFill("pink")
@@ -272,7 +272,7 @@ def game():
     sky.draw(win)
     return win
 
-def animate(angle,power,gravity,win):
+def doubleanimate(angle,power,gravity,win):
     yleft = randint(350,450)
     yright = randint(350,450)
     circleleft = Circle(Point(0,yleft),8)
@@ -283,10 +283,10 @@ def animate(angle,power,gravity,win):
     circleright.draw(win)
     dx = int(power)*(math.cos(int(angle)))
     dy = int(power)*(math.sin(int(angle)))
-    i = True
+    i = 0
     score = 0
     r = 0
-    while i == True:
+    while i < 5000:
         centerpointleft = circleleft.getCenter()
         centerpointleftx = centerpointleft.getX()
         centerpointlefty = centerpointleft.getY()
@@ -294,40 +294,39 @@ def animate(angle,power,gravity,win):
         centerpointrightx = centerpointright.getX()
         centerpointrighty = centerpointright.getY()
         if r >= 2:
-            print("here")
-            i = False
+            i = 5000
         if centerpointleftx > 596:
             circleleft.undraw()
             if centerpointrightx < 4:
                 circleright.undraw()
-                i = False
+                r += 1
             if centerpointrighty > 450:
                 circleright.undraw()
-                i = False
+                r += 1
         if centerpointlefty > 450:
             circleleft.undraw()
             if centerpointrightx < 4:
                 circleright.undraw()
-                i = False
+                r += 1
             if centerpointrighty > 450:
                 circleright.undraw()
-                i = False
+                r += 1
         if centerpointrightx < 4:
             circleright.undraw()
             if centerpointleftx > 596:
                 circleleft.undraw()
-                i = False
+                r += 1
             if centerpointlefty > 450:
                 circleleft.undraw()
-                i = False
+                r += 1
         if centerpointrighty > 450:
             circleright.undraw()
             if centerpointleftx > 596:
                 circleleft.undraw()
-                i = False
+                r += 1
             if centerpointlefty > 450:
                 circleleft.undraw()
-                i = False
+                r += 1
         else:
             circleleft.move(dx,-dy+(0.5*(i**2)*int(gravity)/500))
             circleright.move(-dx,-dy+(0.5*(i**2)*int(gravity)/500))
@@ -339,7 +338,6 @@ def animate(angle,power,gravity,win):
                 yright = clicky - centerpointrighty
                 xleft = clickx - centerpointleftx
                 yleft = clicky - centerpointlefty
-                r = 0
                 if -10 < xright < 10 and -10 < yright < 10:
                     circleright.undraw()
                     score += round(((int(gravity)+int(power))/10),2)
@@ -348,7 +346,7 @@ def animate(angle,power,gravity,win):
                     circleleft.undraw()
                     score += round(((int(gravity)+int(power))/10),2)
                     r += 1
-                
+        i += 1        
         sleep(0.1)
     
     return score
